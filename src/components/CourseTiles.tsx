@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Noise from "./Noise";
 import {
   EnterIcon,
   BookmarkIcon,
@@ -111,14 +112,8 @@ export default function CourseTiles({ courses, onSelectCourse }: CourseTilesProp
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 rounded-2xl p-5 cursor-pointer select-none transition-colors duration-150 will-change-transform min-h-[190px] overflow-hidden"
             >
-              <div className="absolute inset-0 opacity-[0.07] pointer-events-none overflow-hidden rounded-2xl z-0 mix-blend-overlay">
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                  <filter id={`grain-filter-${course.id}`}>
-                    <feTurbulence type="fractalNoise" baseFrequency="0.80" numOctaves="4" stitchTiles="stitch" />
-                    <feColorMatrix type="matrix" values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.9 0" />
-                  </filter>
-                  <rect width="100%" height="100%" filter={`url(#grain-filter-${course.id})`} />
-                </svg>
+              <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl z-0 mix-blend-overlay">
+                <Noise patternAlpha={200} />
               </div>
 
               <div className="space-y-3 z-10 relative">
