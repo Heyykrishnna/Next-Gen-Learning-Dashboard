@@ -113,7 +113,7 @@ export default function CourseTiles({ courses, onSelectCourse }: CourseTilesProp
               className="group relative flex flex-col justify-between bg-zinc-900 border border-zinc-800 rounded-2xl p-5 cursor-pointer select-none transition-colors duration-150 will-change-transform min-h-[190px] overflow-hidden"
             >
               <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl z-0 mix-blend-overlay">
-                <Noise patternAlpha={200} />
+                <Noise patternAlpha={150} />
               </div>
 
               <div className="space-y-3 z-10 relative">

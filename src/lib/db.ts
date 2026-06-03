@@ -43,6 +43,11 @@ const DB_PATH = path.join(process.cwd(), "src/data/db.json");
 function generateMockActivity(): Record<string, number> {
   const activity: Record<string, number> = {};
   const today = new Date();
+  let seed = 987654321;
+  const nextRand = () => {
+    seed = (1103515245 * seed + 12345) % 2147483648;
+    return seed / 2147483648;
+  };
   
   for (let i = 365; i >= 0; i--) {
     const d = new Date(today);
@@ -53,12 +58,12 @@ function generateMockActivity(): Record<string, number> {
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
     
     let count = 0;
-    const rand = Math.random();
+    const rand = nextRand();
     if (isWeekend) {
-      if (rand > 0.6) count = Math.floor(Math.random() * 2) + 1;
+      if (rand > 0.6) count = Math.floor(nextRand() * 2) + 1;
     } else {
       if (rand > 0.2) {
-        count = Math.floor(Math.random() * 4) + 1;
+        count = Math.floor(nextRand() * 4) + 1;
         if (rand > 0.8) count += 2;
       }
     }
