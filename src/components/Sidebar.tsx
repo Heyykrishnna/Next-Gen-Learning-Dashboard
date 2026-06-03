@@ -93,8 +93,8 @@ export default function Sidebar({
                 {isActive && (
                   <motion.div
                     layoutId="activeTabHighlightDesktop"
-                    className="absolute inset-0 bg-zinc-850 rounded-lg -z-10 border border-zinc-800/40"
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    className="absolute inset-0 bg-zinc-800 rounded-lg -z-10 border border-zinc-800/40"
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   />
                 )}
 
@@ -173,8 +173,8 @@ export default function Sidebar({
               {isActive && (
                 <motion.div
                   layoutId="activeTabHighlightMobile"
-                  className="absolute inset-0.5 bg-zinc-850/80 rounded-lg -z-10 border border-zinc-800/40"
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="absolute inset-0.5 bg-zinc-800/80 rounded-lg -z-10 border border-zinc-800/40"
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 />
               )}
               
@@ -186,7 +186,7 @@ export default function Sidebar({
                 <motion.div
                   layoutId="activeLineMobile"
                   className="absolute top-0 w-8 h-[2.5px] bg-indigo-500 rounded-full z-10"
-                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 />
               )}
             </button>
