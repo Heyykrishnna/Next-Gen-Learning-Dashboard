@@ -8,6 +8,7 @@ import CourseTiles from "./CourseTiles";
 import ActivityTile from "./ActivityTile";
 import StatsGrid from "./StatsGrid";
 import CourseModal from "./CourseModal";
+import OverviewChart from "./OverviewChart";
 import { DashboardData, Course, completeLesson, resetDashboardData } from "@/lib/db";
 import { ReloadIcon } from "@radix-ui/react-icons";
 
@@ -145,6 +146,7 @@ export default function DashboardClient({ initialData }: DashboardClientProps) {
                 <p className="text-zinc-500 text-xs mt-1">Granular heatmaps and performance data.</p>
               </div>
             </header>
+            <OverviewChart totalXp={data.user.xp} totalHours={data.user.totalHours} />
             <ActivityTile activity={data.activity} />
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
