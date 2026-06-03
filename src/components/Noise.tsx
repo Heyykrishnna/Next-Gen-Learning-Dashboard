@@ -41,9 +41,18 @@ const Noise: React.FC<NoiseProps> = ({
     const drawGrain = () => {
       const imageData = ctx.createImageData(canvasSize, canvasSize);
       const data = imageData.data;
+      const randomValues = new Uint8Array(canvasSize * canvasSize);
+
+      if (typeof window !== "undefined" && window.crypto) {
+        window.crypto.getRandomValues(randomValues);
+      } else {
+        for (let j = 0; j < randomValues.length; j++) {
+          randomValues[j] = Math.floor(Math.random() * 256);
+        }
+      }
 
       for (let i = 0; i < data.length; i += 4) {
-        const value = Math.random() * 255;
+        const value = randomValues[i / 4];
         data[i] = value;
         data[i + 1] = value;
         data[i + 2] = value;
