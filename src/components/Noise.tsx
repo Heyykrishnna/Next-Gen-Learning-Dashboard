@@ -46,8 +46,10 @@ const Noise: React.FC<NoiseProps> = ({
       if (typeof window !== "undefined" && window.crypto) {
         window.crypto.getRandomValues(randomValues);
       } else {
+        let seed = 123456789;
         for (let j = 0; j < randomValues.length; j++) {
-          randomValues[j] = Math.floor(Math.random() * 256);
+          seed = (1103515245 * seed + 12345) % 2147483648;
+          randomValues[j] = seed % 256;
         }
       }
 
