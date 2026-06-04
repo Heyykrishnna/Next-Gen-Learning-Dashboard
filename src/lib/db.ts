@@ -2,6 +2,7 @@
 
 import fs from "fs/promises";
 import path from "path";
+import { supabase, isSupabaseConfigured } from "./supabase";
 
 export interface Lesson {
   id: string;
@@ -185,7 +186,69 @@ const DEFAULT_DATA: DashboardData = {
   activity: {}
 };
 
-export async function fetchDashboardData(): Promise<DashboardData> {
+interface DbCourse {
+  id: string;
+  title: string;
+  progress: number;
+  icon: string;
+  created_at?: string;
+}
+
+function mapDbRecordToCourse(dbRecord: DbCourse): Course {
+  const title = dbRecord.title;
+  const progress = dbRecord.progress ?? 0;
+  
+  const defaultCourse = DEFAULT_DATA.courses.find(
+    c => c.title.toLowerCase() === title.toLowerCase()
+  );
+  
+  const instructor = defaultCourse?.instructor || "Industry Expert";
+  const difficulty = defaultCourse?.difficulty || "Intermediate";
+  const category = defaultCourse?.category || "General Development";
+  
+  let lessons: Lesson[] = [];
+  if (defaultCourse) {
+    lessons = defaultCourse.lessons.map(l => ({ ...l }));
+  } else {
+    const genericLessonTitles = [
+      "Introduction & Overview",
+      "Core Concepts & Architecture",
+      "State Management & Data Flow",
+      "Advanced Patterns & Implementations",
+      "Integrations & API Connections",
+      "Performance Optimization",
+      "Testing & Debugging",
+      "Deployment & Scaling"
+    ];
+    lessons = genericLessonTitles.map((t, idx) => ({
+      id: `gen-${idx + 1}`,
+      title: t,
+      completed: false
+    }));
+  }
+  
+  const totalLessons = lessons.length;
+  const completedLessonsCount = Math.round((progress / 100) * totalLessons);
+  
+  for (let i = 0; i < totalLessons; i++) {
+    lessons[i].completed = i < completedLessonsCount;
+  }
+  
+  return {
+    id: dbRecord.id,
+    title: dbRecord.title,
+    instructor,
+    difficulty,
+    category,
+    completedLessons: completedLessonsCount,
+    totalLessons,
+    lessons,
+    lastAccessed: dbRecord.created_at || new Date().toISOString(),
+    icon_name: dbRecord.icon || "globe"
+  };
+}
+
+async function fetchLocalDashboardData(): Promise<DashboardData> {
   try {
     await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
     
@@ -204,7 +267,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       });
       
       if (modified) {
-        await saveDashboardData(parsed);
+        await saveLocalDashboardData(parsed);
       }
       
       return parsed;
@@ -216,7 +279,7 @@ export async function fetchDashboardData(): Promise<DashboardData> {
       return initialData;
     }
   } catch (error) {
-    console.error("Failed to fetch dashboard data:", error);
+    console.error("Failed to fetch local dashboard data:", error);
     return {
       user: DEFAULT_DATA.user,
       courses: DEFAULT_DATA.courses,
@@ -225,20 +288,114 @@ export async function fetchDashboardData(): Promise<DashboardData> {
   }
 }
 
-async function saveDashboardData(data: DashboardData): Promise<void> {
+async function saveLocalDashboardData(data: DashboardData): Promise<void> {
   try {
     await fs.mkdir(path.dirname(DB_PATH), { recursive: true });
     await fs.writeFile(DB_PATH, JSON.stringify(data, null, 2), "utf-8");
   } catch (error) {
-    console.error("Failed to save dashboard data:", error);
+    console.error("Failed to save local dashboard data:", error);
   }
 }
+
+export async function fetchDashboardData(): Promise<DashboardData> {
+  const localData = await fetchLocalDashboardData();
+  
+  if (!isSupabaseConfigured) {
+    return localData;
+  }
+  
+  try {
+    const { data: dbCourses, error } = await supabase
+      .from("courses")
+      .select("*")
+      .order("created_at", { ascending: true });
+      
+    if (error) {
+      console.warn("[Supabase] Failed to fetch courses from database, falling back to local storage:", error.message);
+      return localData;
+    }
+    
+    if (!dbCourses || dbCourses.length === 0) {
+      console.log("[Supabase] Courses table is empty. Attempting to seed default courses...");
+      const defaultCoursesToInsert = DEFAULT_DATA.courses.map(c => {
+        const progress = Math.round((c.completedLessons / c.totalLessons) * 100);
+        return {
+          title: c.title,
+          progress,
+          icon: c.icon_name || "globe"
+        };
+      });
+      
+      const { data: seededCourses, error: seedError } = await supabase
+        .from("courses")
+        .insert(defaultCoursesToInsert)
+        .select("*");
+        
+      if (seedError) {
+        console.warn("[Supabase] Failed to seed default courses:", seedError.message);
+        return localData;
+      }
+      
+      if (seededCourses && seededCourses.length > 0) {
+        console.log("[Supabase] Successfully seeded default courses.");
+        const mappedCourses = seededCourses.map(mapDbRecordToCourse);
+        localData.courses = mappedCourses;
+        await saveLocalDashboardData(localData);
+        return {
+          ...localData,
+          courses: mappedCourses
+        };
+      }
+    }
+    
+    const mappedCourses = dbCourses.map(mapDbRecordToCourse);
+    localData.courses = mappedCourses;
+    await saveLocalDashboardData(localData);
+    
+    return {
+      ...localData,
+      courses: mappedCourses
+    };
+  } catch (err) {
+    console.error("[Supabase] Unexpected error in fetchDashboardData:", err);
+    return localData;
+  }
+}
+
 
 export async function resetDashboardData(): Promise<DashboardData> {
   const freshData = { ...DEFAULT_DATA };
   freshData.activity = generateMockActivity();
-  await saveDashboardData(freshData);
-  return freshData;
+  
+  if (isSupabaseConfigured) {
+    try {
+      const { data: dbCourses, error: fetchErr } = await supabase
+        .from("courses")
+        .select("*");
+        
+      if (!fetchErr && dbCourses) {
+        for (const course of dbCourses) {
+          const defaultCourse = DEFAULT_DATA.courses.find(
+            c => c.title.toLowerCase() === course.title.toLowerCase()
+          );
+          const defaultProgress = defaultCourse
+            ? Math.round((defaultCourse.completedLessons / defaultCourse.totalLessons) * 100)
+            : 0;
+            
+          await supabase
+            .from("courses")
+            .update({ progress: defaultProgress })
+            .eq("id", course.id);
+        }
+        console.log("[Supabase] Successfully reset courses progress.");
+      }
+    } catch (err) {
+      console.error("[Supabase] Unexpected error resetting courses:", err);
+    }
+  }
+  
+  await saveLocalDashboardData(freshData);
+  return fetchDashboardData();
 }
 
 export async function completeLesson(courseId: string, lessonId: string): Promise<DashboardData> {
@@ -257,6 +414,25 @@ export async function completeLesson(courseId: string, lessonId: string): Promis
   course.completedLessons = course.lessons.filter(l => l.completed).length;
   course.lastAccessed = new Date().toISOString();
   
+  const newProgress = Math.round((course.completedLessons / course.totalLessons) * 100);
+  
+  if (isSupabaseConfigured) {
+    try {
+      const { error } = await supabase
+        .from("courses")
+        .update({ progress: newProgress })
+        .eq("id", courseId);
+        
+      if (error) {
+        console.warn(`[Supabase] Failed to update progress for course ${courseId}:`, error.message);
+      } else {
+        console.log(`[Supabase] Updated progress for course ${course.title} to ${newProgress}%`);
+      }
+    } catch (err) {
+      console.error(`[Supabase] Unexpected error updating progress:`, err);
+    }
+  }
+  
   const xpReward = 75;
   let newXp = data.user.xp + xpReward;
   let newLevel = data.user.level;
@@ -274,8 +450,8 @@ export async function completeLesson(courseId: string, lessonId: string): Promis
   
   data.user.totalHours += 1;
   
-  const completedCourses = data.courses.filter(c => c.completedLessons === c.totalLessons).length;
-  data.user.completedCoursesCount = completedCourses + 1;
+  const completedCoursesCount = data.courses.filter(c => c.completedLessons === c.totalLessons).length;
+  data.user.completedCoursesCount = completedCoursesCount + 1;
   
   const todayStr = new Date().toISOString().split("T")[0];
   data.activity[todayStr] = (data.activity[todayStr] || 0) + 1;
@@ -295,6 +471,8 @@ export async function completeLesson(courseId: string, lessonId: string): Promis
     }
   }
   
-  await saveDashboardData(data);
+  await saveLocalDashboardData(data);
   return data;
 }
+
+

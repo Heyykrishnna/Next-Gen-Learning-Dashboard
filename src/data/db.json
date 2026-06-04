@@ -1,275 +1,225 @@
 {
   "user": {
     "name": "Yatharth",
-    "streak": 12,
+    "streak": 13,
     "level": 4,
-    "xp": 450,
+    "xp": 675,
     "nextLevelXp": 1000,
-    "totalHours": 42,
-    "completedCoursesCount": 1
+    "totalHours": 45,
+    "completedCoursesCount": 2
   },
   "courses": [
     {
-      "id": "nextjs-16",
-      "title": "Next.js 16 Architecture & Patterns",
-      "instructor": "Sarah Connor",
-      "difficulty": "Advanced",
-      "category": "Web Development",
-      "completedLessons": 12,
-      "totalLessons": 16,
-      "lastAccessed": "2026-06-03T11:06:12.402Z",
-      "icon_name": "globe",
-      "lessons": [
-        {
-          "id": "n1",
-          "title": "App Router Fundamentals",
-          "completed": true
-        },
-        {
-          "id": "n2",
-          "title": "React Server Components Deep Dive",
-          "completed": true
-        },
-        {
-          "id": "n3",
-          "title": "Streaming and Suspense Boundaries",
-          "completed": true
-        },
-        {
-          "id": "n4",
-          "title": "Partial Prerendering (PPR)",
-          "completed": true
-        },
-        {
-          "id": "n5",
-          "title": "Optimizing Client-Side Routing",
-          "completed": true
-        },
-        {
-          "id": "n6",
-          "title": "Server Actions Security & Validation",
-          "completed": true
-        },
-        {
-          "id": "n7",
-          "title": "Custom Middleware & Headers",
-          "completed": true
-        },
-        {
-          "id": "n8",
-          "title": "Optimizing Image and Font Delivery",
-          "completed": true
-        },
-        {
-          "id": "n9",
-          "title": "Data Caching & Revalidation",
-          "completed": true
-        },
-        {
-          "id": "n10",
-          "title": "Advanced Metadata & SEO",
-          "completed": true
-        },
-        {
-          "id": "n11",
-          "title": "Parallel and Intercepting Routes",
-          "completed": true
-        },
-        {
-          "id": "n12",
-          "title": "Dynamic Routing & Static Regeneration",
-          "completed": true
-        },
-        {
-          "id": "n13",
-          "title": "Unstable Instant Navigations",
-          "completed": false
-        },
-        {
-          "id": "n14",
-          "title": "Error Handling & Recovery",
-          "completed": false
-        },
-        {
-          "id": "n15",
-          "title": "Testing App Router Components",
-          "completed": false
-        },
-        {
-          "id": "n16",
-          "title": "Deploying to Vercel & Self-Hosting",
-          "completed": false
-        }
-      ]
-    },
-    {
-      "id": "framer-motion",
-      "title": "Advanced UI Interactions with Framer Motion",
-      "instructor": "Dan Abramov",
+      "id": "1d051e03-c520-4190-a85b-11286bb86eff",
+      "title": "Full Stack Web Dev with Aarav Sharma",
+      "instructor": "Industry Expert",
       "difficulty": "Intermediate",
-      "category": "Design & UX",
-      "completedLessons": 6,
-      "totalLessons": 10,
-      "lastAccessed": "2026-06-02T13:06:12.402Z",
-      "icon_name": "play",
+      "category": "General Development",
+      "completedLessons": 7,
+      "totalLessons": 8,
       "lessons": [
         {
-          "id": "f1",
-          "title": "Introduction to Motion Elements",
+          "id": "gen-1",
+          "title": "Introduction & Overview",
           "completed": true
         },
         {
-          "id": "f2",
-          "title": "Animate Presence & Exit Animations",
+          "id": "gen-2",
+          "title": "Core Concepts & Architecture",
           "completed": true
         },
         {
-          "id": "f3",
-          "title": "Layout Animations & FLIP Technique",
+          "id": "gen-3",
+          "title": "State Management & Data Flow",
           "completed": true
         },
         {
-          "id": "f4",
-          "title": "Keyframes and Transition Types",
+          "id": "gen-4",
+          "title": "Advanced Patterns & Implementations",
           "completed": true
         },
         {
-          "id": "f5",
-          "title": "Gestures, Hover, Tap, and Drag",
+          "id": "gen-5",
+          "title": "Integrations & API Connections",
           "completed": true
         },
         {
-          "id": "f6",
-          "title": "Scroll-triggered Animations",
+          "id": "gen-6",
+          "title": "Performance Optimization",
           "completed": true
         },
         {
-          "id": "f7",
-          "title": "LayoutId Shared Element Transitions",
-          "completed": false
+          "id": "gen-7",
+          "title": "Testing & Debugging",
+          "completed": true
         },
         {
-          "id": "f8",
-          "title": "Custom SVG Animations",
-          "completed": false
-        },
-        {
-          "id": "f9",
-          "title": "Performance Tuning: Will-Change",
-          "completed": false
-        },
-        {
-          "id": "f10",
-          "title": "Accessibility in Motion Design",
+          "id": "gen-8",
+          "title": "Deployment & Scaling",
           "completed": false
         }
-      ]
+      ],
+      "lastAccessed": "2026-06-04T06:42:44.879014+00:00",
+      "icon_name": "Code"
     },
     {
-      "id": "system-design",
-      "title": "Next-Gen System Design & Scalability",
-      "instructor": "Martin Kleppmann",
-      "difficulty": "Advanced",
-      "category": "Architecture",
-      "completedLessons": 3,
+      "id": "29d5191b-dffc-402a-8f2c-9b42766aaef7",
+      "title": "Data Science Foundations - Ananya Iyer",
+      "instructor": "Industry Expert",
+      "difficulty": "Intermediate",
+      "category": "General Development",
+      "completedLessons": 7,
       "totalLessons": 8,
-      "lastAccessed": "2026-06-01T13:06:12.402Z",
-      "icon_name": "layers",
       "lessons": [
         {
-          "id": "s1",
-          "title": "Vertical vs Horizontal Scaling",
+          "id": "gen-1",
+          "title": "Introduction & Overview",
           "completed": true
         },
         {
-          "id": "s2",
-          "title": "Load Balancing & Reverse Proxies",
+          "id": "gen-2",
+          "title": "Core Concepts & Architecture",
           "completed": true
         },
         {
-          "id": "s3",
-          "title": "Database Sharding & Replication",
+          "id": "gen-3",
+          "title": "State Management & Data Flow",
           "completed": true
         },
         {
-          "id": "s4",
-          "title": "Caching Strategies (Redis & Memcached)",
-          "completed": false
+          "id": "gen-4",
+          "title": "Advanced Patterns & Implementations",
+          "completed": true
         },
         {
-          "id": "s5",
-          "title": "Message Queues & Event Sourcing",
-          "completed": false
+          "id": "gen-5",
+          "title": "Integrations & API Connections",
+          "completed": true
         },
         {
-          "id": "s6",
-          "title": "Consistency Models (CAP Theorem)",
-          "completed": false
+          "id": "gen-6",
+          "title": "Performance Optimization",
+          "completed": true
         },
         {
-          "id": "s7",
-          "title": "Microservices Architecture & API Gateways",
-          "completed": false
+          "id": "gen-7",
+          "title": "Testing & Debugging",
+          "completed": true
         },
         {
-          "id": "s8",
-          "title": "Designing for Disaster Recovery",
+          "id": "gen-8",
+          "title": "Deployment & Scaling",
           "completed": false
         }
-      ]
+      ],
+      "lastAccessed": "2026-06-04T06:43:01.070052+00:00",
+      "icon_name": "Database"
     },
     {
-      "id": "tailwind-v4",
-      "title": "Tailwind CSS v4 Design Systems",
-      "instructor": "Adam Wathan",
-      "difficulty": "Beginner",
-      "category": "Web Development",
-      "completedLessons": 2,
+      "id": "88a649c8-07e2-438f-a794-19ea12a81dd5",
+      "title": "Mastering UI/UX with Rohan Verma",
+      "instructor": "Industry Expert",
+      "difficulty": "Intermediate",
+      "category": "General Development",
+      "completedLessons": 1,
       "totalLessons": 8,
-      "lastAccessed": "2026-05-31T13:06:12.402Z",
-      "icon_name": "blending",
       "lessons": [
         {
-          "id": "t1",
-          "title": "What's New in Tailwind v4",
+          "id": "gen-1",
+          "title": "Introduction & Overview",
           "completed": true
         },
         {
-          "id": "t2",
-          "title": "The New CSS-First Configuration",
-          "completed": true
-        },
-        {
-          "id": "t3",
-          "title": "Customizing Theme Variables in CSS",
+          "id": "gen-2",
+          "title": "Core Concepts & Architecture",
           "completed": false
         },
         {
-          "id": "t4",
-          "title": "Dynamic Utility Classes and Arbitrary Properties",
+          "id": "gen-3",
+          "title": "State Management & Data Flow",
           "completed": false
         },
         {
-          "id": "t5",
-          "title": "Designing Responsive Grid Layouts",
+          "id": "gen-4",
+          "title": "Advanced Patterns & Implementations",
           "completed": false
         },
         {
-          "id": "t6",
-          "title": "Container Queries in Action",
+          "id": "gen-5",
+          "title": "Integrations & API Connections",
           "completed": false
         },
         {
-          "id": "t7",
-          "title": "Dark Mode Strategies in v4",
+          "id": "gen-6",
+          "title": "Performance Optimization",
           "completed": false
         },
         {
-          "id": "t8",
-          "title": "Production Builds & Size Optimization",
+          "id": "gen-7",
+          "title": "Testing & Debugging",
+          "completed": false
+        },
+        {
+          "id": "gen-8",
+          "title": "Deployment & Scaling",
           "completed": false
         }
-      ]
+      ],
+      "lastAccessed": "2026-06-04T06:43:23.345059+00:00",
+      "icon_name": "Palette"
+    },
+    {
+      "id": "6aa157b9-889d-4b2b-a176-1f9732c999a7",
+      "title": "DevOps Bootcamp by Priyanka Patel",
+      "instructor": "Industry Expert",
+      "difficulty": "Intermediate",
+      "category": "General Development",
+      "completedLessons": 8,
+      "totalLessons": 8,
+      "lessons": [
+        {
+          "id": "gen-1",
+          "title": "Introduction & Overview",
+          "completed": true
+        },
+        {
+          "id": "gen-2",
+          "title": "Core Concepts & Architecture",
+          "completed": true
+        },
+        {
+          "id": "gen-3",
+          "title": "State Management & Data Flow",
+          "completed": true
+        },
+        {
+          "id": "gen-4",
+          "title": "Advanced Patterns & Implementations",
+          "completed": true
+        },
+        {
+          "id": "gen-5",
+          "title": "Integrations & API Connections",
+          "completed": true
+        },
+        {
+          "id": "gen-6",
+          "title": "Performance Optimization",
+          "completed": true
+        },
+        {
+          "id": "gen-7",
+          "title": "Testing & Debugging",
+          "completed": true
+        },
+        {
+          "id": "gen-8",
+          "title": "Deployment & Scaling",
+          "completed": true
+        }
+      ],
+      "lastAccessed": "2026-06-04T06:43:38.478729+00:00",
+      "icon_name": "Terminal"
     }
   ],
   "activity": {
@@ -526,6 +476,7 @@
     "2026-05-28": 2,
     "2026-05-29": 2,
     "2026-06-01": 2,
-    "2026-06-03": 4
+    "2026-06-03": 4,
+    "2026-06-04": 3
   }
 }
